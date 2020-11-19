@@ -8,6 +8,10 @@ namespace CodeSignal
 {
     class ToptalCodility
     {
+        public static void main()
+        {
+
+        }
         static public double maxPointsInCircle(string S, int[] x, int[] y)
         {
             var pointDict = new Dictionary<char, double>();

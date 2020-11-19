@@ -8,11 +8,9 @@ namespace CodeSignal
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-
-
+            CodilityLessons.main();
             Console.ReadKey();
         }
 
