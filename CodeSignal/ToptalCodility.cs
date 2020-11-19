@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeSignal
 {
-    class Codility
+    class ToptalCodility
     {
         static public double maxPointsInCircle(string S, int[] x, int[] y)
         {
