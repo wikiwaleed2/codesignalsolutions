@@ -20,25 +20,31 @@ namespace CodeSignal
         }
         public static void runTapeEquilibrium()
         {
-            Random _random = new Random();
-            var arr = new int[1000];
-            for (int i = 0; i < 1000; i++)
+            for (int j = 0; j < 100; j++)
             {
-                arr[i] = _random.Next(-100000,10000);
-                //arr[i] = _random.Next(-100000,-1);
-                //arr[i] = _random.Next(1,10000);
+                Random _random = new Random();
+                var arr = new int[_random.Next(_random.Next(1, 10000))];
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    arr[i] = _random.Next(-100000, 10000);
+                    //arr[i] = _random.Next(-100000,-1);
+                    //arr[i] = _random.Next(1,10000);
+                }
+                //arr = new int[] { 2,4};
+                //arr = new int[] { 2,4,9,19,1};
+                var result = tapeEquilibrium(arr);
+                var result2 = tapeEquilibrium2(arr);
+                //Console.WriteLine(result + "..");
+                //Console.WriteLine(result2 + "..");
+                if(result!=result2)
+                Console.WriteLine(result+"..OK.."+result2 + "...NO......");
             }
-            arr = new int[] { -4, 3,3};
-            var result = tapeEquilibrium(arr);
-            var result2 = tapeEquilibrium2(arr);
-            Console.WriteLine(result+"..");
-            Console.WriteLine(result2 + "..");
 
         }
         public static int tapeEquilibrium(int[] A)
         {
             if (A.Length == 0) return 0;
-            if (A.Length == 1) return Math.Abs(A[1]);
+            if (A.Length == 1) return Math.Abs(A[0]);
             var minSum = -1;
             for (int i = 1; i < A.Length; i++)
             {
@@ -52,19 +58,18 @@ namespace CodeSignal
         public static int tapeEquilibrium2(int[] A)
         {
             if (A.Length == 0) return 0;
-            if (A.Length == 1) return Math.Abs(A[1]);
-            var totalSum = Math.Abs(A.Sum());
+            if (A.Length == 1) return Math.Abs(A[0]);
+            var totalSum = A.Sum();
             var total = 0;
-            int? minSum = 0;
+            int? minSum = null;
             for (int i = 0; i < A.Length-1; i++)
             {
                 total += A[i];
-                var tempTotalDiff = Math.Abs(Math.Abs(2 * total) - totalSum);
-                if (minSum == 0)
+                var tempTotalDiff = Math.Abs(2 * total - totalSum);
+                if (minSum == null)
                     minSum = tempTotalDiff;
                 else if (minSum > tempTotalDiff)
                     minSum = tempTotalDiff;
-                Console.WriteLine(tempTotalDiff);
             }
             return Convert.ToInt32(minSum);
         }
