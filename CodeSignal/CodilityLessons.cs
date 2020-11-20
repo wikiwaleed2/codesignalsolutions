@@ -10,6 +10,8 @@ namespace CodeSignal
     {
         public static void main()
         {
+            runConsectiveCounters();
+            runFrogRiverOne();
             runTapeEquilibrium();
             runFindMissingElement();
             runFrogJumps();
@@ -17,6 +19,122 @@ namespace CodeSignal
             runBinaryGap();
             runRotateArray();
             Console.ReadKey();
+        }
+        public static void runConsectiveCounters()
+        {
+            for (int k = 0; k < 5; k++)
+            {
+                var random = new Random();
+
+                var arr = new int[100];
+                var a = random.Next(1, 10);
+                for (int i = 0; i < 100; i++)
+                {
+                    arr[i] = random.Next(1, a + 2);
+                }
+                //arr = new int[] { 4,4,4, 1, 3, 2, 1, 3,3,3,3,4,3,3,3,3,3,4,4,4,4 };
+                //a = 3;
+                var result = consectiveCounters(a, arr);
+                var result2 = consectiveCounters2(a, arr);
+                //if (result[0]!=result2[0])
+                //{
+                    
+                //    for (int i = 0; i < arr.Length; i++)
+                //    {
+                //        Console.Write(arr[i] + ",");
+                //    }
+                //    Console.WriteLine();
+                //    for (int i = 0; i < result.Length; i++)
+                //    {
+                //        Console.Write(result[i] + ",");
+                //    }
+                //    Console.WriteLine();
+                //    for (int i = 0; i < result2.Length; i++)
+                //    {
+                //        Console.Write(result2[i] + ",");
+                //    }
+                //}
+                //Console.WriteLine();
+                //Console.WriteLine();
+            }
+        }
+        public static int[] consectiveCounters(int N, int[] A)
+        {
+            var counters = new int[N];
+            var maxValue = 0;
+            for (int i = 0; i < A.Length; i++)
+            {
+                var aValue = A[i] - 1;
+                if (A[i] <= N)
+                {
+                    counters[aValue]++;
+                    if (maxValue < counters[aValue]) maxValue = counters[aValue];
+                }
+                else
+                {
+                    for (int j = 0; j < counters.Length; j++)
+                    {
+                        counters[j] = maxValue;
+                    }
+                }
+            }
+            return counters;
+        }
+
+        public static int[] consectiveCounters2(int N, int[] A)
+        {
+            var counters = new int[N];
+            var lastIndex = Array.LastIndexOf(A, N + 1);
+            var maxValue = 0;
+            var prevmaxValue = 0;
+
+            for (int i = 0; i <= lastIndex; i++)
+            {
+                var aValue = A[i] - 1;
+                if (A[i] <= N)
+                {
+                    if (counters[aValue] < prevmaxValue) counters[aValue] = prevmaxValue;
+                    counters[aValue]++;
+                    if (maxValue < counters[aValue])
+                        maxValue = counters[aValue];
+
+                }
+                if (A[i] == N+1)
+                {
+                    prevmaxValue = maxValue;
+                }
+            }
+            for (int j = 0; j < counters.Length; j++)
+            {
+                counters[j] = maxValue;
+            }
+            for (int j = lastIndex + 1; j < A.Length; j++)
+            {
+                var aValue = A[j] - 1;
+                if (A[j] <= N)
+                {
+                    counters[aValue]++;
+                }
+            }
+            return counters;
+        }
+        public static void runFrogRiverOne()
+        {
+            var result = frogRiverOne(4,new int[] {1,2,34,5,6,4,3});
+            //Console.WriteLine(result);
+        }
+        public static int frogRiverOne(int X, int[] A)
+        {
+            var hash = new HashSet<int>();
+            for (int i = 0; i < A.Length; i++)
+            {
+                
+                if(A[i]<=X)
+                hash.Add(A[i]);
+                if (hash.Count == X)
+                    return i;
+            }
+            return -1;
         }
         public static void runTapeEquilibrium()
         {
