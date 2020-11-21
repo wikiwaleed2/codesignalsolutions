@@ -24,6 +24,9 @@ namespace CodeSignal
             runRotateArray();
             Console.ReadKey();
         }
+        public static int sample(){return 0;}
+        public static int sample1(){return 0;}
+        public static int sample2(){return 0; }
 
         public static int countpairs(int[] A)
         {
