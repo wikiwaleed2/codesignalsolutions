@@ -10,6 +10,8 @@ namespace CodeSignal
     {
         public static void main()
         {
+            rungetSmallestNum();
+            /// should be 2;
             runConsectiveCounters();
             runFrogRiverOne();
             runTapeEquilibrium();
@@ -19,6 +21,96 @@ namespace CodeSignal
             runBinaryGap();
             runRotateArray();
             Console.ReadKey();
+        }
+        public static void rungetSmallestNum()
+        {
+            var result = 0;
+            var result2 = 0;
+            //while (result == result2)
+            ////{
+            //    var random = new Random();
+            //    var arr = new int[10];
+            //    for (int j = 0; j < arr.Length; j++)
+            //    {
+            //        arr[j] = random.Next(0, 1000);
+            //    }
+            //    result = getSmallestNum(arr);
+            //    result2 = getSmallestNum2(arr);
+            //    if (result != result2)
+            //    {
+            //        for (int j = 0; j < arr.Length; j++)
+            //        {
+            //            Console.Write(arr[j] + ",");
+            //        }
+            //        Console.WriteLine();
+            //        Console.WriteLine("result: " + result);
+            //        Console.WriteLine("result2: " + result2);
+            //        Console.WriteLine();
+            //    }
+
+            //}
+            //Console.WriteLine("Done");
+            var arr = new int[] {  5, 4, 8, 3, 7, 3 };
+            Console.WriteLine(getSmallestNum(arr));
+            Console.WriteLine(getSmallestNum2(arr));
+        }
+        public static int getSmallestNum(int[] A)
+        {
+            var minIndex = -1;
+            double minAvg = int.MaxValue;
+            for (int j = 2; j <= A.Length; j++)
+            {
+                for (int i = 0; i < A.Length - j + 1; i++)
+                {
+                    var avg = Math.Round((double)A.Skip(i).Take(j).Sum() / (double)j, 2);
+                    if (avg < minAvg) { minAvg = avg; minIndex = i; }
+                }
+            }
+            return minIndex;
+        }
+        public static int getSmallestNum2(int[] A)
+        {
+            var minIndex = -1;
+            var minIndexRtl = -1;
+            var tempMinIndex = -1;
+            double minAvg = int.MaxValue;
+            double minavgRtl = int.MaxValue;
+            var length = A.Length;
+            for (int i = 0; i < length - 2 + 1; i++)
+            {
+                var avg = Math.Round((double)A.Skip(i).Take(2).Sum() / (double)2, 3);
+                if (avg < minAvg) { minAvg = avg; minIndex = i; }
+
+                avg = Math.Round((double)A.Skip(length - 2 - i).Take(2).Sum() / (double)2, 3);
+                if (avg < minavgRtl)
+                {
+                    minavgRtl = avg; minIndexRtl = length - 2 - i + 1;
+                };
+            }
+            for (int i = 3; i <= length - minIndex; i++)
+            {
+                var avg = Math.Round((double)A.Skip(minIndex).Take(i).Sum() / (double)i, 3);
+                if (avg < minAvg)
+                {
+                    minAvg = avg;
+                }
+                else break;
+            }
+            for (int i = 3; i <= length; i++)
+            {
+                var avg = Math.Round((double)A.Skip(minIndexRtl - i + 1).Take(i).Sum() / (double)i, 3);
+                if (avg < minavgRtl)
+                {
+                    minavgRtl = avg;
+                    tempMinIndex = minIndexRtl - i + 1;
+                }
+                else break;
+            }
+            if (minAvg <= minavgRtl)
+            {
+                return minIndex;
+            }
+            else return tempMinIndex;
         }
         public static void runConsectiveCounters()
         {
@@ -38,7 +130,7 @@ namespace CodeSignal
                 var result2 = consectiveCounters2(a, arr);
                 //if (result[0]!=result2[0])
                 //{
-                    
+
                 //    for (int i = 0; i < arr.Length; i++)
                 //    {
                 //        Console.Write(arr[i] + ",");
@@ -99,7 +191,7 @@ namespace CodeSignal
                         maxValue = counters[aValue];
 
                 }
-                if (A[i] == N+1)
+                if (A[i] == N + 1)
                 {
                     prevmaxValue = maxValue;
                 }
@@ -120,7 +212,7 @@ namespace CodeSignal
         }
         public static void runFrogRiverOne()
         {
-            var result = frogRiverOne(4,new int[] {1,2,34,5,6,4,3});
+            var result = frogRiverOne(4, new int[] { 1, 2, 34, 5, 6, 4, 3 });
             //Console.WriteLine(result);
         }
         public static int frogRiverOne(int X, int[] A)
@@ -128,9 +220,9 @@ namespace CodeSignal
             var hash = new HashSet<int>();
             for (int i = 0; i < A.Length; i++)
             {
-                
-                if(A[i]<=X)
-                hash.Add(A[i]);
+
+                if (A[i] <= X)
+                    hash.Add(A[i]);
                 if (hash.Count == X)
                     return i;
             }
@@ -154,8 +246,8 @@ namespace CodeSignal
                 var result2 = tapeEquilibrium2(arr);
                 //Console.WriteLine(result + "..");
                 //Console.WriteLine(result2 + "..");
-                if(result!=result2)
-                Console.WriteLine(result+"..OK.."+result2 + "...NO......");
+                if (result != result2)
+                    Console.WriteLine(result + "..OK.." + result2 + "...NO......");
             }
 
         }
@@ -180,7 +272,7 @@ namespace CodeSignal
             var totalSum = A.Sum();
             var total = 0;
             int? minSum = null;
-            for (int i = 0; i < A.Length-1; i++)
+            for (int i = 0; i < A.Length - 1; i++)
             {
                 total += A[i];
                 var tempTotalDiff = Math.Abs(2 * total - totalSum);
