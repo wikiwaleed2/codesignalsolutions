@@ -10,8 +10,10 @@ namespace CodeSignal
     {
         public static void main()
         {
+            countpairs(new int[] {1, 0,1,0,1,1});
+            getRandomSizeArrays(-100,1100);
+            getRandomNumbersArray(100, 1, 2);
             rungetSmallestNum();
-            /// should be 2;
             runConsectiveCounters();
             runFrogRiverOne();
             runTapeEquilibrium();
@@ -22,6 +24,55 @@ namespace CodeSignal
             runRotateArray();
             Console.ReadKey();
         }
+
+        public static int countpairs(int[] A)
+        {
+            if (A.Length == 0 || A.Length == 1) return 0;
+            var zc = 0;
+            var total = 0;
+            for (int i = 0; i < A.Length; i++)
+            {
+                if (A[i] == 0)
+                    zc++;
+                else
+                {
+                    total += zc;
+                    if (total > 1000000000) return -1;
+                }
+            }
+            return total;
+        }
+
+        public static int[] getRandomNumbersArray(int length, int min, int max)
+        {
+            var random = new Random();
+            var arr = new int[length];
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = random.Next(min, max);
+            }
+            return arr;
+        }
+
+        public static int[][] getRandomSizeArrays(int min , int max)
+        {
+            int[][] arrays = new int[100][];
+            arrays[0] = new int[0];
+            arrays[1] = new int[1];
+            arrays[2] = new int[2];
+            var random = new Random();
+            var arr = new int[random.Next(min, max)];
+            for (int i = 0; i < arrays.Length; i++)
+            {
+                arrays[i] = new int[random.Next(0, max)];
+                for (int j = 0; j < arrays[i].Length; j++)
+                {
+                    arrays[i][j] = random.Next(min, max);
+                }
+            }
+            return arrays;
+        }
+
         public static void rungetSmallestNum()
         {
             var result = 0;
@@ -50,7 +101,8 @@ namespace CodeSignal
 
             //}
             //Console.WriteLine("Done");
-            var arr = new int[] {  5, 4, 8, 3, 7, 3 };
+            //var arr = new int[] { 5, 4, 8, 3, 7, 3 };
+            var arr = new int[] { 1,1,0,0,0,0,1,1,0,0,0,0,0,0 };
             Console.WriteLine(getSmallestNum(arr));
             Console.WriteLine(getSmallestNum2(arr));
         }
@@ -59,13 +111,11 @@ namespace CodeSignal
             var minIndex = -1;
             double minAvg = int.MaxValue;
             for (int j = 2; j <= A.Length; j++)
-            {
                 for (int i = 0; i < A.Length - j + 1; i++)
                 {
                     var avg = Math.Round((double)A.Skip(i).Take(j).Sum() / (double)j, 2);
                     if (avg < minAvg) { minAvg = avg; minIndex = i; }
                 }
-            }
             return minIndex;
         }
         public static int getSmallestNum2(int[] A)
