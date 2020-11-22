@@ -10,8 +10,8 @@ namespace CodeSignal
     {
         public static void main()
         {
-            countpairs(new int[] {1, 0,1,0,1,1});
-            getRandomSizeArrays(-100,1100);
+            sample1(getRandomNumbersArray(1000000,1,1000));
+            getRandomSizeArrays(-100, 1100);
             getRandomNumbersArray(100, 1, 2);
             rungetSmallestNum();
             runConsectiveCounters();
@@ -24,9 +24,59 @@ namespace CodeSignal
             runRotateArray();
             Console.ReadKey();
         }
-        public static int sample(){return 0;}
-        public static int sample1(){return 0;}
-        public static int sample2(){return 0; }
+        public static int sample() { return 0; }
+        public static int sample1(int[] A)
+        {
+
+
+            //if (A.Length < 2) return 0;
+            //var count = 0;
+            //var count2 = 0;
+            //for (int i = 0; i < A.Length; i++)
+            //{
+            //    for (int j = i+1; j < A.Length; j++)
+            //    {
+            //        double radiusSum = (double)A[i] + (double)A[j];
+            //        var pointsDiff = Math.Abs(i - j);
+            //        if (radiusSum >= pointsDiff)
+            //            count++;
+            //        if (count > 10000000) return -1;
+            //    }
+            //}
+            //return count;
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            // the code that you want to measure comes here
+            
+            var a = A;
+            int result = 0;
+            int[] dps = new int[a.Length];
+            int[] dpe = new int[a.Length];
+
+            for (int i = 0, tt = a.Length - 1; i < a.Length; i++)
+            {
+                int s = i > a[i] ? i - a[i] : 0;
+                int e = tt - i > a[i] ? i + a[i] : tt;
+                dps[s]++;
+                dpe[e]++;
+            }
+
+            int t = 0;
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (dps[i] > 0)
+                {
+                    result += t * dps[i];
+                    result += dps[i] * (dps[i] - 1) / 2;
+                    //if (10000000 < result) return -1;
+                    t += dps[i];
+                }
+                t -= dpe[i];
+            }
+            watch.Stop();
+            var ts = watch.Elapsed.TotalMilliseconds/1000;
+            return result;
+        }
+        public static int sample2() { return 0; }
 
         public static int countpairs(int[] A)
         {
@@ -57,7 +107,7 @@ namespace CodeSignal
             return arr;
         }
 
-        public static int[][] getRandomSizeArrays(int min , int max)
+        public static int[][] getRandomSizeArrays(int min, int max)
         {
             int[][] arrays = new int[100][];
             arrays[0] = new int[0];
@@ -105,7 +155,7 @@ namespace CodeSignal
             //}
             //Console.WriteLine("Done");
             //var arr = new int[] { 5, 4, 8, 3, 7, 3 };
-            var arr = new int[] { 1,1,0,0,0,0,1,1,0,0,0,0,0,0 };
+            var arr = new int[] { 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0 };
             Console.WriteLine(getSmallestNum(arr));
             Console.WriteLine(getSmallestNum2(arr));
         }
