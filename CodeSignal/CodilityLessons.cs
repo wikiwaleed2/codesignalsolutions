@@ -8,41 +8,39 @@ namespace CodeSignal
 {
     class CodilityLessons
     {
-        public static void main()
-        {
-
-
-            while (Console.ReadKey().KeyChar != 'q')
-            {
-                Console.Clear();
-                var a = getRandomNumbersArray(10, 0, 10);
-                var b = getRandomNumbersArray(10, 0, 1);
-                //a = new int[] { 7, 5, 8, 9, 0, 2, 1, 0, 4, 7, };
-                //b = new int[] { 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, };
-                printIntArray(a);
-                printIntArray(b);
-                Console.WriteLine(sample2(a, b));
-            }
-            return;
-            getRandomSizeArrays(-100, 1100);
-            getRandomNumbersArray(100, 1, 2);
-            rungetSmallestNum();
-            runConsectiveCounters();
-            runFrogRiverOne();
-            runTapeEquilibrium();
-            runFindMissingElement();
-            runFrogJumps();
-            runOddOccurencesInArray();
-            runBinaryGap();
-            runRotateArray();
-            Console.ReadKey();
-        }
-        public static int sample(int[] A) { return 0; }
-        public static int sample1(int[] A)
+        public static int sample(int[] A)
         {
             return 0;
         }
-        public static int sample2(int[] A, int[] B)
+        public static int sample2(int[] A)
+        {
+
+            return 0;
+        }
+        public static void main()
+        {
+            CodlilityLessonsMain.main();
+            return;
+            var a = CodilityLessons.getRandomNumbersArray(10, 0, 10);
+            var b = CodilityLessons.getRandomNumbersArray(10, 0, 1);
+            {
+                countLivingFishes(a, b);
+                getRandomSizeArrays(-100, 1100);
+                getRandomNumbersArray(100, 1, 2);
+                rungetSmallestNum();
+                runConsectiveCounters();
+                runFrogRiverOne();
+                runTapeEquilibrium();
+                runFindMissingElement();
+                runFrogJumps();
+                runOddOccurencesInArray();
+                runBinaryGap();
+                runRotateArray();
+                Console.ReadKey();
+            }
+        }
+        
+        public static int countLivingFishes(int[] A, int[] B)
         {
             if (A.Length == 0) return 0;
             if (A.Length == 1) return 1;
