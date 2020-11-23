@@ -46,43 +46,35 @@ namespace CodeSignal
         {
             if (A.Length == 0) return 0;
             if (A.Length == 1) return 1;
-            var stack = new Stack<int>();
-            var stackzero = new Stack<int>();
+            var stack = new List<int>();
             var leftOnes = Array.IndexOf(B, 1);
             if (leftOnes == -1) return A.Length;
-            var onesMax = 0;
-            //for (int i = 0; i < leftOnes; i++)
-            //{
-            //   stackzero.Push(i);
-            //}
+            var onesMax = int.MinValue;
             for (int i = leftOnes; i < A.Length; i++)
             {
                 if (B[i] == 1)
                 {
-                    // assign ones max here if incoming is less than max dont pop else clear
                     onesMax = A[i] > onesMax ? A[i] : onesMax;
-                    stack.Push(A[i]);
+                    stack.Add(A[i]);
                 }
                 else
                 {
-                    while (stack.Count != 0 && A[i] > stack.Peek())
+                    if (A[i] > onesMax)
                     {
-                        stack.Pop();
+                        stack.Clear();
+                        leftOnes++;
+                        onesMax = int.MinValue;
                     }
-                    if (stack.Count == 0) stackzero.Push(A[i]);
-                    //if (A[i] > onesMax) { stack.Clear();stackzero.Push(A[i]); }
-                    //else
-                    //{
-                    //    while (stack.Count != 0 && A[i] > stack.Peek())
-                    //    {
-                    //        stack.Pop();
-                    //    }
-                    //}
+                    else
+                    {
+                        while (stack.Count != 0 && A[i] > stack.Last())
+                        {
+                            stack.RemoveAt(stack.Count-1);
+                        }
+                    }
                 }
             }
-
-            //var greater = stack.Count > stack2.Count ? stack.Count : stack2.Count;
-            return stackzero.Count + stack.Count + leftOnes;
+            return leftOnes + stack.Count;
         }
 
         public static void printIntArray(int[] A)
