@@ -10,7 +10,20 @@ namespace CodeSignal
     {
         public static void main()
         {
-            sample1(getRandomNumbersArray(1000000,1,1000));
+
+
+            while (Console.ReadKey().KeyChar != 'q')
+            {
+                Console.Clear();
+                var a = getRandomNumbersArray(10, 0, 10);
+                var b = getRandomNumbersArray(10, 0, 1);
+                //a = new int[] { 7, 5, 8, 9, 0, 2, 1, 0, 4, 7, };
+                //b = new int[] { 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, };
+                printIntArray(a);
+                printIntArray(b);
+                Console.WriteLine(sample2(a, b));
+            }
+            return;
             getRandomSizeArrays(-100, 1100);
             getRandomNumbersArray(100, 1, 2);
             rungetSmallestNum();
@@ -24,30 +37,85 @@ namespace CodeSignal
             runRotateArray();
             Console.ReadKey();
         }
-        public static int sample() { return 0; }
+        public static int sample(int[] A) { return 0; }
         public static int sample1(int[] A)
         {
-
-
-            //if (A.Length < 2) return 0;
-            //var count = 0;
-            //var count2 = 0;
-            //for (int i = 0; i < A.Length; i++)
+            return 0;
+        }
+        public static int sample2(int[] A, int[] B)
+        {
+            if (A.Length == 0) return 0;
+            if (A.Length == 1) return 1;
+            var stack = new Stack<int>();
+            var stackzero = new Stack<int>();
+            var leftOnes = Array.IndexOf(B, 1);
+            if (leftOnes == -1) return A.Length;
+            var onesMax = 0;
+            //for (int i = 0; i < leftOnes; i++)
             //{
-            //    for (int j = i+1; j < A.Length; j++)
-            //    {
-            //        double radiusSum = (double)A[i] + (double)A[j];
-            //        var pointsDiff = Math.Abs(i - j);
-            //        if (radiusSum >= pointsDiff)
-            //            count++;
-            //        if (count > 10000000) return -1;
-            //    }
+            //   stackzero.Push(i);
             //}
-            //return count;
+            for (int i = leftOnes; i < A.Length; i++)
+            {
+                if (B[i] == 1)
+                {
+                    // assign ones max here if incoming is less than max dont pop else clear
+                    onesMax = A[i] > onesMax ? A[i] : onesMax;
+                    stack.Push(A[i]);
+                }
+                else
+                {
+                    while (stack.Count != 0 && A[i] > stack.Peek())
+                    {
+                        stack.Pop();
+                    }
+                    if (stack.Count == 0) stackzero.Push(A[i]);
+                    //if (A[i] > onesMax) { stack.Clear();stackzero.Push(A[i]); }
+                    //else
+                    //{
+                    //    while (stack.Count != 0 && A[i] > stack.Peek())
+                    //    {
+                    //        stack.Pop();
+                    //    }
+                    //}
+                }
+            }
+
+            //var greater = stack.Count > stack2.Count ? stack.Count : stack2.Count;
+            return stackzero.Count + stack.Count + leftOnes;
+        }
+
+        public static void printIntArray(int[] A)
+        {
+            foreach (var item in A)
+            {
+                Console.Write(item + ",");
+            }
+            Console.WriteLine();
+        }
+        public static int discintersection(int[] A)
+        {
+            if (A.Length < 2) return 0;
+            var count = 0;
+            var count2 = 0;
+            for (int i = 0; i < A.Length; i++)
+            {
+                for (int j = i + 1; j < A.Length; j++)
+                {
+                    double radiusSum = (double)A[i] + (double)A[j];
+                    var pointsDiff = Math.Abs(i - j);
+                    if (radiusSum >= pointsDiff)
+                        count++;
+                    if (count > 10000000) return -1;
+                }
+            }
+            return count;
+
+        }
+        public static int discintersection2(int[] a)
+        {
             var watch = System.Diagnostics.Stopwatch.StartNew();
             // the code that you want to measure comes here
-            
-            var a = A;
             int result = 0;
             int[] dps = new int[a.Length];
             int[] dpe = new int[a.Length];
@@ -73,10 +141,10 @@ namespace CodeSignal
                 t -= dpe[i];
             }
             watch.Stop();
-            var ts = watch.Elapsed.TotalMilliseconds/1000;
+            var ts = watch.Elapsed.TotalMilliseconds / 1000;
             return result;
+
         }
-        public static int sample2() { return 0; }
 
         public static int countpairs(int[] A)
         {
@@ -102,7 +170,7 @@ namespace CodeSignal
             var arr = new int[length];
             for (int i = 0; i < arr.Length; i++)
             {
-                arr[i] = random.Next(min, max);
+                arr[i] = random.Next(min, max+1);
             }
             return arr;
         }
