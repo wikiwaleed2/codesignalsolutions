@@ -8,14 +8,127 @@ namespace CodeSignal
 {
     class CodilityLessons
     {
-        public static int sample(int[] A)
+        public static void stringprob()
         {
-            return 0;
-        }
-        public static int sample2(int[] A)
-        {
+            var str = "abcdef";
+            var hash = new int[][]
+            {
+                new int[]{1,3 },
+                new int[]{2,5 },
+                new int[]{3,2 },
+            };
+            StringBuilder final = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                var xIndex = final.ToString().IndexOf(hash[i][0].ToString());
+                var yIndex = final.ToString().IndexOf(hash[i][1].ToString());
+                if (xIndex == -1 && yIndex == -1)
+                    final.Append("-" + hash[i][0].ToString() + "," + hash[i][1].ToString());
+                else if (xIndex == -1 && yIndex != -1)
+                    final.Insert(yIndex, hash[i][0].ToString() + ",");
+                else if (xIndex != -1 && yIndex == -1)
+                    final.Insert(xIndex, hash[i][1].ToString() + ",");
+                else
+                {
+                    final.Append('-');
+                    var xIndexEnd = final.ToString().IndexOf('-', xIndex);
+                    var yIndexEnd = final.ToString().IndexOf('-', yIndex);
+                    var yIndexStart = -1;
+                    var xIndexStart = -1;
+                    if (xIndexEnd == yIndexEnd) continue;
+                    else
+                    {
+                        for (int j = xIndex; j >= 0; j--)
+                            if (final[j] == '-')
+                            {
+                                xIndexStart = j;
+                                break;
+                            }
+                        for (int j = yIndex; j >= 0; j--)
+                            if (final[j] == '-')
+                            {
+                                yIndexStart = j;
+                                break;
+                            }
+                        var substrX = final.ToString().Substring(xIndexStart + 1, xIndexEnd - xIndexStart - 1);
+                        var substrY = final.ToString().Substring(yIndexStart + 1, yIndexEnd - yIndexStart - 1);
+                        final.Replace("-" + substrX, "").Replace("-" + substrY, "");
+                        var unionXY = string.Join(",", substrX.Split(',').Union(substrY.Split(',')).ToArray());
+                        final.Append(unionXY);
+                    }
+                }
+            }
+            final.Remove(0,1);
 
-            return 0;
+
+
+
+
+        }
+        public static int maxdoubleSlice2(int[] A)
+        {
+            int i, n;
+
+            n = A.Length;
+
+            if (3 == n) return 0;
+
+            var max_sum_end = new int[n];
+            var max_sum_start = new int[n];
+
+            for (i = 1; i < (n - 1); i++) // i=0 and i=n-1 are not used because x=0,z=n-1
+            {
+                max_sum_end[i] = Math.Max(0, max_sum_end[i - 1] + A[i]);
+            }
+
+            for (i = n - 2; i > 0; i--) // i=0 and i=n-1 are not used because x=0,z=n-1
+            {
+                max_sum_start[i] = Math.Max(0, max_sum_start[i + 1] + A[i]);
+            }
+
+            int maxvalue, temp;
+            maxvalue = 0;
+
+            for (i = 1; i < (n - 1); i++)
+            {
+                temp = max_sum_end[i - 1] + max_sum_start[i + 1];
+                if (temp > maxvalue) maxvalue = temp;
+            }
+
+            return maxvalue;
+        }
+        public static int maxdoubleSlice(int[] A)
+        {
+            var max = 0;
+            for (int i = 0; i < A.Length; i++)
+            {
+                for (int j = i + 1; j < A.Length - 1; j++)
+                {
+                    for (int k = j + 1; k < A.Length; k++)
+                    {
+                        if (j - i - 1 != 0 || k - j - 1 != 0)
+                        {
+                            var sum = maxSliceSum(A.Skip(i + 1).Take(j - i - 1).ToArray()) +
+                                    maxSliceSum(A.Skip(j + 1).Take(k - j - 1).ToArray());
+                            if (sum > max)
+                                max = sum;
+                        }
+                    }
+                }
+            }
+            return max;
+        }
+        public static int maxSliceSum(int[] A)
+        {
+            if (A.Length == 0) return 0;
+            var previousSliceMax = -10000;
+            var max = -10000;
+            for (int i = 0; i < A.Length; i++)
+            {
+                previousSliceMax = A[i] > previousSliceMax + A[i] ? A[i] : previousSliceMax + A[i];
+                max = previousSliceMax > max ? previousSliceMax : max;
+            }
+            return max;
         }
         public static void main()
         {
@@ -39,7 +152,7 @@ namespace CodeSignal
                 Console.ReadKey();
             }
         }
-        
+
         public static int countLivingFishes(int[] A, int[] B)
         {
             if (A.Length == 0) return 0;
@@ -67,7 +180,7 @@ namespace CodeSignal
                     {
                         while (stack.Count != 0 && A[i] > stack.Last())
                         {
-                            stack.RemoveAt(stack.Count-1);
+                            stack.RemoveAt(stack.Count - 1);
                         }
                     }
                 }
@@ -160,7 +273,7 @@ namespace CodeSignal
             var arr = new int[length];
             for (int i = 0; i < arr.Length; i++)
             {
-                arr[i] = random.Next(min, max+1);
+                arr[i] = random.Next(min, max + 1);
             }
             return arr;
         }
