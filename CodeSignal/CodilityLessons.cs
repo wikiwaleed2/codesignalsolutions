@@ -8,62 +8,85 @@ namespace CodeSignal
 {
     class CodilityLessons
     {
-        public static void stringprob()
+        public static string scanEachElemetInListAgainstEach()
         {
-            var str = "abcdef";
-            var hash = new int[][]
+            var str = "qvspxdrbvwfuaahtzbpjudfyzccgzwynkgihwmdshvfnvyvfjc";
+            var pairs = new int[][]
             {
-                new int[]{1,3 },
-                new int[]{2,5 },
-                new int[]{3,2 },
+
+ new int[]{16, 26},
+ new int[]{2, 25},
+ new int[]{25, 27},
+ new int[]{19, 20},
+ new int[]{13, 20},
+ new int[]{4, 26},
+ new int[]{19, 27},
+ new int[]{18, 26},
+ new int[]{13, 23},
+ new int[]{1, 4},
+ new int[]{11, 19},
+ new int[]{16, 19},
+ new int[]{25, 28},
+ new int[]{19, 30},
+ new int[]{19, 25},
+ new int[]{1, 11},
+ new int[]{2, 20},
+ new int[]{10, 22},
+ new int[]{6, 19},
+ new int[]{7, 26},
+ new int[]{3, 30},
+ new int[]{15, 23},
+ new int[]{12, 26},
+ new int[]{1, 3},
+ new int[]{3, 12},
+ new int[]{3, 26},
+ new int[]{16, 30},
+ new int[]{2, 16},
+ new int[]{4, 13}
             };
-            StringBuilder final = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
+
+            str = "abdc";
+            pairs = new int[][] 
             {
-                var xIndex = final.ToString().IndexOf(hash[i][0].ToString());
-                var yIndex = final.ToString().IndexOf(hash[i][1].ToString());
-                if (xIndex == -1 && yIndex == -1)
-                    final.Append("-" + hash[i][0].ToString() + "," + hash[i][1].ToString());
-                else if (xIndex == -1 && yIndex != -1)
-                    final.Insert(yIndex, hash[i][0].ToString() + ",");
-                else if (xIndex != -1 && yIndex == -1)
-                    final.Insert(xIndex, hash[i][1].ToString() + ",");
-                else
+                new int[]{1,4 },
+                new int[]{3,4 },
+            };
+            var indexLists = new List<HashSet<int>>();
+            for (int i = 0; i < pairs.Length; i++)
+            {
+                var x = pairs[i][0] - 1;
+                var y = pairs[i][1] - 1;
+                var newLists = new HashSet<int>() { x, y };
+                foreach (var list in indexLists.ToList())
                 {
-                    final.Append('-');
-                    var xIndexEnd = final.ToString().IndexOf('-', xIndex);
-                    var yIndexEnd = final.ToString().IndexOf('-', yIndex);
-                    var yIndexStart = -1;
-                    var xIndexStart = -1;
-                    if (xIndexEnd == yIndexEnd) continue;
-                    else
+                    if (list.Contains(x) || list.Contains(y))
                     {
-                        for (int j = xIndex; j >= 0; j--)
-                            if (final[j] == '-')
-                            {
-                                xIndexStart = j;
-                                break;
-                            }
-                        for (int j = yIndex; j >= 0; j--)
-                            if (final[j] == '-')
-                            {
-                                yIndexStart = j;
-                                break;
-                            }
-                        var substrX = final.ToString().Substring(xIndexStart + 1, xIndexEnd - xIndexStart - 1);
-                        var substrY = final.ToString().Substring(yIndexStart + 1, yIndexEnd - yIndexStart - 1);
-                        final.Replace("-" + substrX, "").Replace("-" + substrY, "");
-                        var unionXY = string.Join(",", substrX.Split(',').Union(substrY.Split(',')).ToArray());
-                        final.Append(unionXY);
+                        newLists.UnionWith(list);
+                        indexLists.Remove(list);
                     }
                 }
+                indexLists.Add(newLists);
             }
-            final.Remove(0,1);
-
-
-
-
-
+            StringBuilder strnew = new StringBuilder(str);
+            var charList = new List<List<char>>();
+            for (int i = 0; i < indexLists.Count; i++)
+            {
+                var temp = indexLists[i].ToList();
+                temp.Sort();
+                var list = new List<char>();
+                foreach (var chr in temp)
+                {
+                    list.Add(str[chr]);
+                }
+                list.Sort();
+                list.Reverse();
+                foreach (var chr in temp)
+                {
+                    strnew[chr] = list.First();
+                    list.RemoveAt(0);
+                }
+            }
+            return strnew.ToString();
         }
         public static int maxdoubleSlice2(int[] A)
         {
