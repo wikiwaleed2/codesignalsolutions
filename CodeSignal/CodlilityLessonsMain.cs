@@ -10,7 +10,7 @@ namespace CodeSignal
     {
         public static void main()
         {
-            CodilityLessons.stringprob();
+            CodilityLessons.solution();
             var a = CodilityLessons.getRandomNumbersArray(10, 0, 10);
             var b = CodilityLessons.getRandomNumbersArray(10, 0, 1);
             a = new int[] { 5, 17, 0, 3 };

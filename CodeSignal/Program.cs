@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.Linq.Expressions;
 
 namespace CodeSignal
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            CodilityLessons.main();
+            //Console.WriteLine(Convert.ToDouble(new DataTable().Compute(Console.ReadLine(), String.Empty)));
             Console.ReadKey();
         }
 

@@ -8,45 +8,147 @@ namespace CodeSignal
 {
     class CodilityLessons
     {
+        public static bool isPrime(int x)
+        {
+            if (x == 2 || x == 3 || x == 5 || x == 7) return true;
+            else if (x == 1) return false;
+            var xArr = x.ToString().ToCharArray().Select(_ => Convert.ToInt32(_-'0'));
+            var checkList = new List<int>() { 0, 2, 4, 6, 8 };
+            var xsqrt =(int) Math.Sqrt(x);
+            if (checkList.Contains(Convert.ToInt32(xArr.Last()))) return false;
+            else if (xArr.Sum() % 3 == 0) return false;
+            for (int i = 11; i <= xsqrt;)
+            {
+                if (x % i == 0)
+                    return false;
+                if (i.ToString().EndsWith("3")) i += 4;
+                else i += 2;
+            }
+            return true;
+        }
+        public static int fab(int x)
+        {
+            if (x == 0) return 0;
+            if (x == 1) return 1;
+            return fab(x-1)+fab(x-2);
+        }
+        public static bool isFab(int x)
+        {
+            for (int i = 0; i <= (x/2)+2; i++)
+            {
+                if (fab(i) == x) return true;
+                if (fab(i) > x) return false;
+            }
+            return false;
+        }
+
+        public static int solution()
+        {
+            var jumps = 0;
+            var A = new int[] { 0,0,0,1,1,0,1,0,0,0,0 };
+            var totDis = A.Length + 1;
+            var fabList = new List<int>();
+            var firstFab = 0;
+            var secondFab = 1;
+            for (int i = 0; i <= 12; i++)
+            {
+                fabList.Add(firstFab + secondFab);
+                firstFab = firstFab + secondFab;
+            }
+
+            if (isFab(totDis)) return ++jumps;
+            
+            var tempFab = -1;
+            for (int i = 0; i < A.Length; i++)
+            {
+                
+            }
+
+
+
+
+
+            var B = new int[] {75,30,5 };
+            var mainCounter = 0;
+            for (int i = 0; i < B.Length; i++)
+            {
+                var first = A[i];
+                var second = B[i];
+                int divisiorLimit = first > second ? first : second;
+                divisiorLimit = (int)Math.Sqrt(divisiorLimit);
+                var counterA = 0;
+                var counterB = 0;
+                for (int j = 2; j <=divisiorLimit; j++)
+                {
+                    if (first % j == 0 && isPrime(j)) counterA++;
+                    if (second % j == 0 && isPrime(j)) counterB++;
+                    if (counterA != counterB) break;
+                }
+                if (counterA == counterB )
+                    mainCounter++;
+            }
+            return mainCounter;
+            //var A = new int[] {-1,-2,-3}; // decreasing negative
+            //var A = new int[] {-3,-2,-1};  // increasing negative
+            //var A = new int[] {1,2,3};  // increasing positvie
+            //var A = new int[] {3,2,1};  // decreasing positvie
+            //var A = new int[] {-3,-2,-1,0,1,2,3};  // increasing positvie-negative
+            //var A = new int[] {0,1,2,3,0,-1,-2,-3};  // decreasing positvie-negative
+            //var A = new int[] {0,1,2,3,0,-1,-2,-3,4,3};  // increase-decrease-increase
+            //var A = new int[] {-1,-2,-3,0,1,2,3,-4,-3};  // decrease-increase-decrease
+            //var A = new int[] {};  // decrease-increase-decrease
+            //var A = new int[] {-2};  // single
+            //var A = new int[] {1,2};  // decrease-increase-decrease
+
+
+
+            A = new int[] {3};  //3
+            var temp = new int[A.Length];  
+            for (int i = 0; i < A.Length; i++)
+            {
+                var counter = 0;
+                for (int j = 0; j < A.Length; j++)
+                {
+                    if (i != j && A[i] % A[j] != 0) counter++;
+                }
+                temp[i] = counter;
+            }
+           
+            if (A.Length == 0) return 0;
+            var startIndex = -1;
+            var max = int.MinValue;
+            for (int i = 0; i < A.Length; i++)
+            {
+                if (A[i] > max)max = A[i];
+                if (A[i] > 0)
+                {
+                    startIndex = i;
+                    break;
+                }
+            }
+            if (startIndex < 0) return max;
+            var total = 0;
+            var sum = 0;
+            var prevSum = 0;
+            for (int i = startIndex; i < A.Length; i++)
+            {
+                total += A[i];
+
+                if (A[i] + sum > sum) sum = Math.Max(A[i] + sum, A[i]);
+                else
+                {
+                    prevSum = Math.Max(sum, prevSum);
+                    sum = A[i] + sum;
+                }
+            }
+            sum = Math.Max(Math.Max(prevSum, sum), total);
+            return sum;
+    }
         public static string scanEachElemetInListAgainstEach()
         {
-            var str = "qvspxdrbvwfuaahtzbpjudfyzccgzwynkgihwmdshvfnvyvfjc";
-            var pairs = new int[][]
-            {
-
- new int[]{16, 26},
- new int[]{2, 25},
- new int[]{25, 27},
- new int[]{19, 20},
- new int[]{13, 20},
- new int[]{4, 26},
- new int[]{19, 27},
- new int[]{18, 26},
- new int[]{13, 23},
- new int[]{1, 4},
- new int[]{11, 19},
- new int[]{16, 19},
- new int[]{25, 28},
- new int[]{19, 30},
- new int[]{19, 25},
- new int[]{1, 11},
- new int[]{2, 20},
- new int[]{10, 22},
- new int[]{6, 19},
- new int[]{7, 26},
- new int[]{3, 30},
- new int[]{15, 23},
- new int[]{12, 26},
- new int[]{1, 3},
- new int[]{3, 12},
- new int[]{3, 26},
- new int[]{16, 30},
- new int[]{2, 16},
- new int[]{4, 13}
-            };
-
-            str = "abdc";
-            pairs = new int[][] 
+            var counter = 0;
+            var str = "abdc";
+            var pairs = new int[][] 
             {
                 new int[]{1,4 },
                 new int[]{3,4 },
@@ -54,11 +156,13 @@ namespace CodeSignal
             var indexLists = new List<HashSet<int>>();
             for (int i = 0; i < pairs.Length; i++)
             {
+                counter++;
                 var x = pairs[i][0] - 1;
                 var y = pairs[i][1] - 1;
                 var newLists = new HashSet<int>() { x, y };
                 foreach (var list in indexLists.ToList())
                 {
+                    counter++;
                     if (list.Contains(x) || list.Contains(y))
                     {
                         newLists.UnionWith(list);
@@ -68,7 +172,6 @@ namespace CodeSignal
                 indexLists.Add(newLists);
             }
             StringBuilder strnew = new StringBuilder(str);
-            var charList = new List<List<char>>();
             for (int i = 0; i < indexLists.Count; i++)
             {
                 var temp = indexLists[i].ToList();
